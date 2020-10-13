@@ -4,6 +4,8 @@ import sys
 import corenlp
 import requests
 
+os.environ['CORENLP_HOME'] = "/content/rat-sql/third_party/stanford-corenlp-full-2018-10-05"
+
 
 class CoreNLP:
     def __init__(self):
@@ -18,7 +20,12 @@ class CoreNLP:
 
                 Direct URL: http://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip
                 Landing page: https://stanfordnlp.github.io/CoreNLP/''')
-        self.client = corenlp.CoreNLPClient()
+        self.client = corenlp.CoreNLPClient(
+            timeout=150000000,
+            endpoint='http://localhost:9001',
+            memory='4G',
+            be_quiet=True,
+        )
 
     def __del__(self):
         self.client.stop()
